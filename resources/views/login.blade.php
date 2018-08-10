@@ -22,27 +22,39 @@
     <body>
         
   
+@auth
+
+@else
 
 <div class="container">
     <div class="row justify-content-center">
+        <form class="form-signin" method="POST" action="{{ route('login') }}">
+            @csrf
+            <h2 class="form-signin-heading">CEMITÉRIO ONLINE</h2>
+            <label for="cpf" >CPF</label>
+            <input type="text" id="cpf" name="cpf" class="form-control" placeholder="Digite seu CPF" required autofocus>
+           
 
-        <form class="form-signin">
-        <h2 class="form-signin-heading">CEMITÉRIO ONLINE</h2>
-        <label for="inputCPF" >CPF</label>
-        <input type="text" id="inputCPF" class="form-control" placeholder="Digite seu CPF" required autofocus>
-        
-        <label for="inputPassword">Senha</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Senha de acesso" required>
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Senha de acesso" required>
+            
+            @if ($errors->all())
+            <div class="alert alert-danger" role="alert">
+                <strong>CPF ou senha inválidos!</strong>
+            </div>
+            @endif
 
-        <div class="row justify-content-center">
-            <button class="btn btn-md btn-primary" type="submit">ENTRAR</button>
-        </div>
+            <div class="row justify-content-center">
+                <button class="btn btn-md btn-primary" type="submit">ENTRAR</button>
+            </div>
             
         </form>
     </div>
 
 </div> 
 <!-- /container -->
+
+@endauth
 
 
     </body>
