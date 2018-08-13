@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <title>Laravel</title>
+          <title>{{ config('app.name', 'CEMITÉRIO MUNICIPAL DE MARATAÍZES') }}</title>
 
         <!-- Fonts -->
         
@@ -30,13 +30,13 @@
     <div class="row justify-content-center">
         <form class="form-signin" method="POST" action="{{ route('login') }}">
             @csrf
-            <h2 class="form-signin-heading">CEMITÉRIO ONLINE</h2>
+            <p class="form-signin-heading">CEMITÉRIO MUNICIPAL DE MARATAÍZES</p>
             <label for="cpf" >CPF</label>
-            <input type="text" id="cpf" name="cpf" class="form-control" placeholder="Digite seu CPF" required autofocus>
+            <input type="text" id="cpf" name="cpf" class="form-control text-center" placeholder="Digite seu CPF" required autofocus>
            
 
             <label for="password">Senha</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Senha de acesso" required>
+            <input type="password" id="password" name="password" class="form-control text-center" placeholder="Senha de acesso" required>
             
             @if ($errors->all())
             <div class="alert alert-danger" role="alert">

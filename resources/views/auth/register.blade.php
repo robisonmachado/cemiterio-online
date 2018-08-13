@@ -54,6 +54,25 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="user_type" class="col-md-4 col-form-label text-md-right">{{ __('Tipo do usuário') }}</label>
+                            <div class="col-md-6">
+                                <select id="user_type" class="form-control{{ $errors->has('user_type') ? ' is-invalid' : '' }}" name="user_type" required>
+                                    <option value="1">ZELADOR / COVEIRO</option>
+                                    <option value="2">DIRETOR</option>
+                                    <option value="3">SUPERINTENDENTE</option>
+                                    <option value="4">SECRETÁRIO</option>
+                                </select>
+                             
+
+                                @if ($errors->has('user_type'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('user_type') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">

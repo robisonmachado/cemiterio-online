@@ -13,3 +13,7 @@ button{
 div.alert{
     margin-top: 1vh;
 }
+
+.form-signin-heading{
+    font-weight: bold;
+}
