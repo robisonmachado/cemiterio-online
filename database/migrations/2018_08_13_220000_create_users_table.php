@@ -19,6 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('cpf')->unique();
             $table->string('email');
             $table->string('password');
+
+            $table->unsignedInteger('user_type_id');
+            $table->foreign('user_type_id')
+                    ->references('id')->on('user_types')
+                    ->onDelete('cascade');
+
             $table->rememberToken();
             $table->timestamps();
         });

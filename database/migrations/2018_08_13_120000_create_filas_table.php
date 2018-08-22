@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserTypesTable extends Migration
+class CreateFilasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,15 @@ class CreateUserTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_types', function (Blueprint $table) {
+        Schema::create('filas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('numero');
+
+            $table->unsignedInteger('quadra_id');
+            $table->foreign('quadra_id')
+                    ->references('id')->on('quadras')
+                    ->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -26,6 +33,6 @@ class CreateUserTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_types');
+        Schema::dropIfExists('filas');
     }
 }
