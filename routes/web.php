@@ -23,3 +23,4 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/sepultamento', 'SepultamentoController');

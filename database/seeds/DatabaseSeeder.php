@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            QuadrasTableSeeder::class,
+            //QuadrasTableSeeder::class,
             //FilasTableSeeder::class,
             //CovasTableSeeder::class,
             

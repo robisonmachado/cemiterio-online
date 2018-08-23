@@ -1,6 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+
+<!-- ERRORS -->
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <p>ERROS ENCONTRADOS</p>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<!-- FIM ERRORS -->
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -20,23 +35,24 @@
     <div id="accordion">
         <!-- FORMULÁRIO REGISTRAR SEPULTAMENTO -->
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-            <form>
+            <form method="POST" action="sepultamento" enctype="multipart/form-data">
+            @csrf
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    <label for="falecido">Falecido</label>
-                    <input class="form-control" id="falecido" placeholder="Nome do falecido">
+                    <label for="falecido">FALECIDO</label>
+                    <input class="form-control" id="falecido" name="falecido" value="{{ old('falecido') }}" placeholder="Nome do falecido">
                 </div>
                
             </div>
             
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="dataFalecimento">DATA DE FALECIMENTO</label>
-                    <input type="date" class="form-control" id="dataFalecimento" name="dataFalecimento">
+                    <label for="data_falecimento">DATA DE FALECIMENTO</label>
+                    <input type="date" class="form-control" id="data_falecimento" name="data_falecimento" value="{{ old('data_falecimento') }}">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="dataSepultamento">DATA DE SEPULTAMENTO</label>
-                    <input type="date" class="form-control" id="dataSepultamento" name="dataSepultamento">
+                    <label for="data_sepultamento">DATA DE SEPULTAMENTO</label>
+                    <input type="date" class="form-control" id="data_sepultamento" name="data_sepultamento" value="{{ old('data_sepultamento') }}">
                 </div>
                 
             </div>
@@ -44,35 +60,32 @@
             <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="quadra">QUADRA</label>
-                    <input type="number" min="0" class="form-control" id="quadra">
+                    <input type="number" min="0" class="form-control" id="quadra" name="quadra" value="{{ old('quadra') }}">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="quadra">FILA</label>
-                    <input type="number" min="0" class="form-control" id="quadra">
+                    <label for="fila">FILA</label>
+                    <input type="number" min="0" class="form-control" id="fila" name="fila" value="{{ old('fila') }}">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="quadra">COVA / TUMULO</label>
-                    <input type="number" min="0" class="form-control" id="quadra">
+                    <label for="cova">COVA / JAZIGO</label>
+                    <input type="number" min="0" class="form-control" id="cova" name="cova" value="{{ old('cova') }}">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="quadra">SEPULTAMENTO</label>
-                    <input type="number" min="0" class="form-control" id="quadra">
+                    <label for="numero_sepultamento">Nº SEPULTAMENTO</label>
+                    <input type="number" min="0" class="form-control" id="numero_sepultamento" name="numero_sepultamento" value="{{ old('numero_sepultamento') }}">
                 </div>
             </div>
 
-            <div class="input-group">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                <label class="custom-file-label" for="inputGroupFile04">ANEXAR CERTIDÃO DE ÓBITO</label>
-            </div>
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">ANEXAR</button>
-            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="atestado_obito">ATESTADO DE ÓBITO</label>
+                    <input type="file" class="" id="atestado_obito" name="atestado_obito">
+                </div>
             </div>
 
-            
             <button type="submit" class="btn btn-primary">REGISTRAR</button>
-
+            
         </form>
         </div>
         <!-- FIM FORMULÁRIO REGISTRAR SEPULTAMENTO -->

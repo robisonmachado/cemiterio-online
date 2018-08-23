@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSepultamentosTable extends Migration
+class CreateJazigosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,22 @@ class CreateSepultamentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('sepultamentos', function (Blueprint $table) {
+        Schema::create('jazigos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('numero');
 
             $table->unsignedInteger('cova_id');
             $table->foreign('cova_id')
                     ->references('id')->on('covas')
                     ->onDelete('cascade');
+
+            $table->string('responsavel');
+            $table->string('protocolo')->nullable();
+            $table->string('telefone1')->nullable();
+            $table->string('telefone2')->nullable();
+            $table->string('cidade')->nullable();
+            $table->string('bairro')->nullable();
+            $table->string('endereco')->nullable();
+            $table->text('observacoes')->nullable();
 
             $table->timestamps();
         });
@@ -33,6 +41,6 @@ class CreateSepultamentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sepultamentos');
+        Schema::dropIfExists('jazigos');
     }
 }

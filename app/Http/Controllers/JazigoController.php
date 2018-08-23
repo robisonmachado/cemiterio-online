@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Jazigo;
 use Illuminate\Http\Request;
-use Validator;
-use App\Quadra;
-use App\Fila;
-use App\Cova;
-use App\Sepultamento;
 
-class SepultamentoController extends Controller
+class JazigoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,35 +35,16 @@ class SepultamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
-
-        $validatedData = $request->validate([
-            'falecido' => 'required|unique:sepultamentos',
-            'data_falecimento' => 'required',
-            'quadra' => 'required',
-            'fila' => 'required',
-            'cova' => 'required',
-            'numero_sepultamento' => 'required',
-        ],[
-            'required'    => 'O campo ":attribute" é obrigatório',
-            'unique'    => 'O campo ":attribute" deve ser único.',
-        ]);
-        
-        Sepultamento::addSepultamento($request);
-        
-
-        
-        
-        
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Sepultamento  $sepultamento
+     * @param  \App\Jazigo  $jazigo
      * @return \Illuminate\Http\Response
      */
-    public function show(Sepultamento $sepultamento)
+    public function show(Jazigo $jazigo)
     {
         //
     }
@@ -76,10 +52,10 @@ class SepultamentoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Sepultamento  $sepultamento
+     * @param  \App\Jazigo  $jazigo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sepultamento $sepultamento)
+    public function edit(Jazigo $jazigo)
     {
         //
     }
@@ -88,10 +64,10 @@ class SepultamentoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Sepultamento  $sepultamento
+     * @param  \App\Jazigo  $jazigo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sepultamento $sepultamento)
+    public function update(Request $request, Jazigo $jazigo)
     {
         //
     }
@@ -99,10 +75,10 @@ class SepultamentoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Sepultamento  $sepultamento
+     * @param  \App\Jazigo  $jazigo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sepultamento $sepultamento)
+    public function destroy(Jazigo $jazigo)
     {
         //
     }
