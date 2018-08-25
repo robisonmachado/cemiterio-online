@@ -11,4 +11,9 @@ class Cova extends Model
     public function fila(){
         return $this->belongsTo(Fila::class);
     }
+
+    public function sepultamentos(){
+        return $this->hasMany(Sepultamento::class);
+    }
+
 }

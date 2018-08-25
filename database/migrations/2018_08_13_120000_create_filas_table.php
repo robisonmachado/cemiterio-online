@@ -16,11 +16,13 @@ class CreateFilasTable extends Migration
         Schema::create('filas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('numero');
-
+            
             $table->unsignedInteger('quadra_id');
             $table->foreign('quadra_id')
                     ->references('id')->on('quadras')
                     ->onDelete('cascade');
+            
+            $table->unique(['numero', 'quadra_id']);
 
             $table->timestamps();
         });

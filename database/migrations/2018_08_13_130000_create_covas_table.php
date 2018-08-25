@@ -21,6 +21,8 @@ class CreateCovasTable extends Migration
             $table->foreign('fila_id')
                     ->references('id')->on('filas')
                     ->onDelete('cascade');
+            
+            $table->unique(['numero', 'fila_id']);
 
             $table->timestamps();
         });

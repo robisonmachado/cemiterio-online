@@ -331,6 +331,7 @@ class ComposerStaticInit4211de4e105b4eb2d35df3552b7eafda
         'App\\Http\\Controllers\\CovaController' => __DIR__ . '/../..' . '/app/Http/Controllers/CovaController.php',
         'App\\Http\\Controllers\\FilaController' => __DIR__ . '/../..' . '/app/Http/Controllers/FilaController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\JazigoController' => __DIR__ . '/../..' . '/app/Http/Controllers/JazigoController.php',
         'App\\Http\\Controllers\\QuadraController' => __DIR__ . '/../..' . '/app/Http/Controllers/QuadraController.php',
         'App\\Http\\Controllers\\SepultamentoController' => __DIR__ . '/../..' . '/app/Http/Controllers/SepultamentoController.php',
         'App\\Http\\Controllers\\UserTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserTypeController.php',

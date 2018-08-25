@@ -43,7 +43,7 @@ class SepultamentoController extends Controller
         //dd($request);
 
         $validatedData = $request->validate([
-            'falecido' => 'required|unique:sepultamentos',
+            'falecido' => 'required',
             'data_falecimento' => 'required',
             'quadra' => 'required',
             'fila' => 'required',
@@ -54,10 +54,13 @@ class SepultamentoController extends Controller
             'unique'    => 'O campo ":attribute" deve ser único.',
         ]);
         
-        Sepultamento::addSepultamento($request);
+        $result = Sepultamento::addSepultamento($request);
         
-
+        if($result){
+            return back()->with('status', 'SEPULTAMENTO INSERIDO COM SUCESSO!');
+        }
         
+        //echo "result of operation: {{ $result }}";
         
         
     }

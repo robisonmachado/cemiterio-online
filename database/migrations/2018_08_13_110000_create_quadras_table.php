@@ -15,7 +15,7 @@ class CreateQuadrasTable extends Migration
     {
         Schema::create('quadras', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('numero');
+            $table->integer('numero')->unique();
             $table->timestamps();
         });
     }

@@ -18,6 +18,7 @@ return array(
     'App\\Http\\Controllers\\CovaController' => $baseDir . '/app/Http/Controllers/CovaController.php',
     'App\\Http\\Controllers\\FilaController' => $baseDir . '/app/Http/Controllers/FilaController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
+    'App\\Http\\Controllers\\JazigoController' => $baseDir . '/app/Http/Controllers/JazigoController.php',
     'App\\Http\\Controllers\\QuadraController' => $baseDir . '/app/Http/Controllers/QuadraController.php',
     'App\\Http\\Controllers\\SepultamentoController' => $baseDir . '/app/Http/Controllers/SepultamentoController.php',
     'App\\Http\\Controllers\\UserTypeController' => $baseDir . '/app/Http/Controllers/UserTypeController.php',

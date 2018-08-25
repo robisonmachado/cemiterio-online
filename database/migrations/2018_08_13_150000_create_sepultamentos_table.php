@@ -25,6 +25,8 @@ class CreateSepultamentosTable extends Migration
                     ->onDelete('cascade');
             
             $table->integer('numero_sepultamento');
+
+            $table->unique(['numero_sepultamento', 'cova_id']);
             
             $table->string('atestado_obito')->nullable();
 
