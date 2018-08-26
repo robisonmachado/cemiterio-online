@@ -10,6 +10,14 @@
 @endif
 <!-- FIM STATUS -->
 
+<!-- EXCEPTION -->
+@if (session('exception'))
+    <div class="alert alert-danger">
+        {{ session('exception') }}
+    </div>
+@endif
+<!-- FIM EXCEPTION -->
+
 <!-- ERRORS -->
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -43,7 +51,8 @@
     <div id="accordion">
         <!-- FORMULÁRIO REGISTRAR SEPULTAMENTO -->
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-            <form method="POST" action="sepultamento" enctype="multipart/form-data">
+            <form method="POST" action="sepultamento" enctype="multipart/form-data" class="form-registrar-sepultamento">
+            <div class="alert alert-info text-center"> <strong>REGISTRAR SEPULTAMENTO</strong> </div>
             @csrf
             <div class="form-row">
                 <div class="form-group col-md-12">
@@ -101,7 +110,63 @@
 
         <!-- FORMULÁRIO PESQUISAR SEPULTAMENTO -->
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            <form method="POST" action="sepultamento/pesquisar" class="form-pesquisar-sepultamento">
+                <div class="alert alert-info text-center"> <strong>PESQUISAR SEPULTAMENTOS</strong> </div>
+                @csrf
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="falecido">FALECIDO</label>
+                        <input class="form-control" id="falecido" name="falecido" value="{{ old('falecido') }}" placeholder="Nome ou parte do nome do falecido">
+                    </div>
+                
+                </div>
+                                
+                <div class="form-group row">                    
+                        <div class="col-4">
+                            <label for="ano_falecimento">ANO DO ÓBITO</label>
+                            <input type="number" min="0" class="form-control" id="ano_falecimento" name="ano_falecimento" value="{{ old('ano_falecimento') }}">
+                        </div>
+                    
+                    
+                        <div class="col-4">
+                            <label for="dia_falecimento">MÊS DO ÓBITO</label>
+                            <input type="number" min="0" class="form-control" id="mes_falecimento" name="mes_falecimento" value="{{ old('mes_falecimento') }}">
+                        </div>
+                    
+                        <div class="col-4">                 
+                            <label for="dia_falecimento">DIA DO ÓBITO</label>                        
+                            <input type="number" min="0" class="form-control" id="dia_falecimento" name="dia_falecimento" value="{{ old('dia_falecimento') }}">
+                        </div>
+                    
+                </div>
+                    
+                    
+                
+
+                <div class="form-row">
+                    <div class="form-group col-3">
+                        <label for="quadra">QUADRA</label>
+                        <input type="number" min="0" class="form-control" id="quadra" name="quadra" value="{{ old('quadra') }}">
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="fila">FILA</label>
+                        <input type="number" min="0" class="form-control" id="fila" name="fila" value="{{ old('fila') }}">
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="cova">COVA / JAZIGO</label>
+                        <input type="number" min="0" class="form-control" id="cova" name="cova" value="{{ old('cova') }}">
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="numero_sepultamento">Nº SEPULTAMENTO</label>
+                        <input type="number" min="0" class="form-control" id="numero_sepultamento" name="numero_sepultamento" value="{{ old('numero_sepultamento') }}">
+                    </div>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">PESQUISAR</button>
+                
+            </form>
         </div>
         <!-- FIM FORMULÁRIO PESQUISAR SEPULTAMENTO -->
 

@@ -24,3 +24,4 @@ Route::get('/register', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/sepultamento', 'SepultamentoController');
+Route::post('/sepultamento/pesquisar', 'SepultamentoController@pesquisar');

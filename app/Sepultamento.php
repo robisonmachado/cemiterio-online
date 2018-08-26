@@ -114,6 +114,86 @@ class Sepultamento extends Model
         return null;
     }
 
+    public static function pesquisar(Request $request){
+        $falecido = $request->input('falecido');
+        $ano_falecimento = $request->input('ano_falecimento');
+        $mes_falecimento = $request->input('mes_falecimento');
+        $dia_falecimento = $request->input('dia_falecimento');
+        $quadra = $request->input('quadra');
+        $fila = $request->input('fila');
+        $cova = $request->input('cova');
+        $numero_sepultamento = $request->input('numero_sepultamento');
+
+        $hasDate = ( !empty($dia_falecimento) && !empty($mes_falecimento) && !empty($ano_falecimento) );
+        $hasValidDate = false;
+        $dateString = null;
+        if($hasDate){
+            $hasValidDate = checkdate($mes_falecimento, $dia_falecimento, $ano_falecimento);
+            if($hasValidDate){
+                $dateString = "{$ano_falecimento}-{$mes_falecimento}-{$dia_falecimento}";
+            }
+        }
+
+        //dd($request->all());
+        $results = null;
+        if(!empty($falecido)){
+            $results = Sepultamento::where('falecido', 'like', "%{$request->falecido}%");
+        }
+
+        /* if(!empty($hasValidDate)){
+            
+            if(!empty($results)){
+                $results->whereDate('data_falecimento', $dateString);
+            }else{
+                $results = Sepultamento::whereDate('data_falecimento', $dateString);
+            }
+            
+        } */
+
+        if(!empty($ano_falecimento)){
+            
+            if(!empty($results)){
+                $results->whereYear('data_falecimento', $ano_falecimento);
+            }else{
+                $results = Sepultamento::whereYear('data_falecimento', $ano_falecimento);
+            }
+            
+        }
+
+        if(!empty($mes_falecimento)){
+            
+            if(!empty($results)){
+                $results->whereMonth('data_falecimento', $mes_falecimento);
+            }else{
+                $results = Sepultamento::whereMonth('data_falecimento', $mes_falecimento);
+            }
+            
+        }
+
+        if(!empty($dia_falecimento)){
+            
+            if(!empty($results)){
+                $results->whereDay('data_falecimento', $dia_falecimento);
+            }else{
+                $results = Sepultamento::whereDay('data_falecimento', $dia_falecimento);
+            }
+            
+        }
+
+        //dd($results->count());
+
+        if(!empty($results) and ($results->count() > 0)){
+            foreach($results->orderby('data_falecimento')
+                            ->orderby('falecido')->get() as $result){
+                echo "<br> {$result->falecido} - data: {$result->data_falecimento}<br>";
+            }
+        }else{
+            echo 'nenhum resultado encontrado';
+        }
+        
+
+    }
+
 
 
 }

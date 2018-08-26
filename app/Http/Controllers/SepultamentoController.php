@@ -10,6 +10,8 @@ use App\Fila;
 use App\Cova;
 use App\Sepultamento;
 
+use App\Exceptions\DatabaseException;
+
 class SepultamentoController extends Controller
 {
     /**
@@ -54,10 +56,15 @@ class SepultamentoController extends Controller
             'unique'    => 'O campo ":attribute" deve ser único.',
         ]);
         
-        $result = Sepultamento::addSepultamento($request);
+        try{
+            $result = Sepultamento::addSepultamento($request);
+        }catch(\Exception $e){
+            throw new DatabaseException('ERRO AO REGISTRAR SEPULTAMENTO');
+        }
+        
         
         if($result){
-            return back()->with('status', 'SEPULTAMENTO INSERIDO COM SUCESSO!');
+            return back()->with('status', 'SEPULTAMENTO REGISTRADO COM SUCESSO!');
         }
         
         //echo "result of operation: {{ $result }}";
@@ -108,5 +115,26 @@ class SepultamentoController extends Controller
     public function destroy(Sepultamento $sepultamento)
     {
         //
+    }
+
+    public function pesquisar(Request $request)
+    {
+        $validatedData = $request->validate([
+            'falecido' => 'nullable|alpha',
+            'ano_falecimento' => 'nullable|numeric',
+            'mes_falecimento' => 'nullable|numeric',
+            'dia_falecimento' => 'nullable|numeric',
+            'quadra' => 'nullable|numeric',
+            'fila' => 'nullable|numeric',
+            'cova' => 'nullable|numeric',
+            'numero_sepultamento' => 'nullable|numeric',
+        ],[
+            'required'    => 'O campo ":attribute" é obrigatório',
+            'numeric'    => 'O campo ":attribute" deve ser um número',
+            'alpha'    => 'O campo ":attribute" só pode ter letras',
+        ]);
+        //dd($request);
+        Sepultamento::pesquisar($request);
+
     }
 }

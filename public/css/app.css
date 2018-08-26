@@ -10471,6 +10471,17 @@ a.text-dark:focus {
   }
 }
 
+.form-registrar-sepultamento,
+.form-pesquisar-sepultamento {
+  margin-top: 2vh;
+  margin-bottom: 1vh;
+}
+
+.form-registrar-sepultamento label,
+.form-pesquisar-sepultamento label {
+  font-weight: bold;
+}
+
 .navbar-laravel {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
