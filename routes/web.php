@@ -11,12 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
 
+
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
+
+Route::get('/login', function () {
+    //echo 'funciona /';
+    return view('login');
+})->name('login');;
+
 
 Route::get('/register', function () {
     echo "register";

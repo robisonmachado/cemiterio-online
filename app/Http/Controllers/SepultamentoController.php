@@ -134,7 +134,11 @@ class SepultamentoController extends Controller
             'alpha'    => 'O campo ":attribute" só pode ter letras',
         ]);
         //dd($request);
-        Sepultamento::pesquisar($request);
+        $resultados = Sepultamento::pesquisar($request);
+
+        return view('resultado-pesquisa', ['sepultamentos' => $resultados]);
+
+
 
     }
 }

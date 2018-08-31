@@ -16,5 +16,9 @@ class Fila extends Model
     public function covas(){
         return $this->hasMany(Cova::class);
     }
+
+    public function sepultamentos(){
+        return $this->hasManyThrough(sepultamento::class, Cova::class);
+    }
     
 }

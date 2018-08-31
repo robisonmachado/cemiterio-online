@@ -34,23 +34,39 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    AÇÕES DE SEPULTAMENTO
+       
+            <div class="dropdown p-1">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuFalecimentos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    SEPULTAMENTO
                 </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">REGISTRAR SEPULTAMENTO</a>
-                        <a class="dropdown-item" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">PESQUISAR SEPULTAMENTOS</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuFalecimentos">
+                    <a class="dropdown-item" data-toggle="collapse" data-target="#formRegistrarSepultamento" aria-expanded="false" aria-controls="formRegistrarSepultamento">REGISTRAR SEPULTAMENTO</a>
+                    <a class="dropdown-item" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">PESQUISAR SEPULTAMENTOS</a>
                 </div>
+                
             </div>
-        </div>
+
+
+            <div class="dropdown p-1">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuJazigos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    JAZIGOS
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuJazigos">
+                    <a class="dropdown-item" data-toggle="collapse" data-target="#formRegistrarJazigo" aria-expanded="false" aria-controls="formRegistrarJazigo">REGISTRAR JAZIGO</a>
+                    <a class="dropdown-item" data-toggle="collapse" data-target="#formPesquisarJazigo" aria-expanded="false" aria-controls="formPesquisarJazigo">PESQUISAR JAZIGOS</a>
+                </div>
+                
+            </div>
+
+
+            
+        
     </div>
 
     
     <div id="accordion">
         <!-- FORMULÁRIO REGISTRAR SEPULTAMENTO -->
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+        <div id="formRegistrarSepultamento" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
             <form method="POST" action="sepultamento" enctype="multipart/form-data" class="form-registrar-sepultamento">
             <div class="alert alert-info text-center"> <strong>REGISTRAR SEPULTAMENTO</strong> </div>
             @csrf
@@ -169,6 +185,126 @@
             </form>
         </div>
         <!-- FIM FORMULÁRIO PESQUISAR SEPULTAMENTO -->
+
+
+        <!-- FORMULÁRIO REGISTRAR JAZIGO -->
+        <div id="formRegistrarJazigo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            
+            <form method="POST" action="sepultamento" enctype="multipart/form-data" class="form-registrar-sepultamento">
+            <div class="alert alert-info text-center"> <strong>REGISTRAR JAZIGO</strong> </div>
+            <p class="text-center">EM BREVE FORMULÁRIO DE REGISTRO DE JAZIGOS</p>
+            <!-- 
+            @csrf
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="falecido">RESPONSÁVEL</label>
+                    <input class="form-control" id="falecido" name="falecido" value="{{ old('falecido') }}" placeholder="Nome do falecido">
+                </div>
+               
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="quadra">PROTOCOLO</label>
+                    <input type="number" min="0" class="form-control" id="quadra" name="quadra" value="{{ old('quadra') }}">
+                </div>
+                
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="quadra">QUADRA</label>
+                    <input type="number" min="0" class="form-control" id="quadra" name="quadra" value="{{ old('quadra') }}">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="fila">FILA</label>
+                    <input type="number" min="0" class="form-control" id="fila" name="fila" value="{{ old('fila') }}">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="cova">COVA / JAZIGO</label>
+                    <input type="number" min="0" class="form-control" id="cova" name="cova" value="{{ old('cova') }}">
+                </div>
+                
+            </div>
+
+
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="atestado_obito">ATESTADO DE ÓBITO</label>
+                    <input type="file" class="" id="atestado_obito" name="atestado_obito">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">REGISTRAR</button>
+            -->
+        </form> 
+        </div>
+        <!-- FIM FORMULÁRIO REGISTRAR JAZIGO -->
+
+
+        <!-- FORMULÁRIO PESQUISAR JAZIGO -->
+        <div id="formPesquisarJazigo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <form method="POST" action="sepultamento/pesquisar" class="form-pesquisar-sepultamento">
+                <div class="alert alert-info text-center"> <strong>PESQUISAR JAZIGOS</strong> </div>
+                <p class="text-center">EM BREVE FORMULÁRIO DE PESQUISA DE JAZIGOS</p>
+                
+                <!-- @csrf
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="falecido">FALECIDO</label>
+                        <input class="form-control" id="falecido" name="falecido" value="{{ old('falecido') }}" placeholder="Nome ou parte do nome do falecido">
+                    </div>
+                
+                </div>
+                                
+                <div class="form-group row">                    
+                        <div class="col-4">
+                            <label for="ano_falecimento">ANO DO ÓBITO</label>
+                            <input type="number" min="0" class="form-control" id="ano_falecimento" name="ano_falecimento" value="{{ old('ano_falecimento') }}">
+                        </div>
+                    
+                    
+                        <div class="col-4">
+                            <label for="dia_falecimento">MÊS DO ÓBITO</label>
+                            <input type="number" min="0" class="form-control" id="mes_falecimento" name="mes_falecimento" value="{{ old('mes_falecimento') }}">
+                        </div>
+                    
+                        <div class="col-4">                 
+                            <label for="dia_falecimento">DIA DO ÓBITO</label>                        
+                            <input type="number" min="0" class="form-control" id="dia_falecimento" name="dia_falecimento" value="{{ old('dia_falecimento') }}">
+                        </div>
+                    
+                </div>
+                    
+                    
+                
+
+                <div class="form-row">
+                    <div class="form-group col-3">
+                        <label for="quadra">QUADRA</label>
+                        <input type="number" min="0" class="form-control" id="quadra" name="quadra" value="{{ old('quadra') }}">
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="fila">FILA</label>
+                        <input type="number" min="0" class="form-control" id="fila" name="fila" value="{{ old('fila') }}">
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="cova">COVA / JAZIGO</label>
+                        <input type="number" min="0" class="form-control" id="cova" name="cova" value="{{ old('cova') }}">
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="numero_sepultamento">Nº SEPULTAMENTO</label>
+                        <input type="number" min="0" class="form-control" id="numero_sepultamento" name="numero_sepultamento" value="{{ old('numero_sepultamento') }}">
+                    </div>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">PESQUISAR</button>
+                 -->
+            </form>
+        </div>
+        <!-- FIM FORMULÁRIO PESQUISAR JAZIGO -->
 
 
     </div>
