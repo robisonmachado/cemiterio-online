@@ -26,4 +26,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function userType(){
+        return $this->belongsTo(UserType::class);
+    }
+
+    public function isSecretario(){
+        return $this->userType->id == UserType::SECRETARIO;
+    }
+
+    public function isSuperintendente(){
+        return $this->userType->id == UserType::SUPERINTENDENTE;
+    }
+
+    public function isDiretor(){
+        return $this->userType->id == UserType::DIRETOR;
+    }
+
+    public function isZelador(){
+        return $this->userType->id == UserType::ZELADOR;
+    }
+
+
+
 }

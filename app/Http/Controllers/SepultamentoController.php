@@ -120,7 +120,6 @@ class SepultamentoController extends Controller
     public function pesquisar(Request $request)
     {
         $validatedData = $request->validate([
-            'falecido' => 'nullable|alpha',
             'ano_falecimento' => 'nullable|numeric',
             'mes_falecimento' => 'nullable|numeric',
             'dia_falecimento' => 'nullable|numeric',
@@ -133,12 +132,105 @@ class SepultamentoController extends Controller
             'numeric'    => 'O campo ":attribute" deve ser um número',
             'alpha'    => 'O campo ":attribute" só pode ter letras',
         ]);
-        //dd($request);
+        
+                
         $resultados = Sepultamento::pesquisar($request);
 
-        return view('resultado-pesquisa', ['sepultamentos' => $resultados]);
+        if(empty($resultados)){
+            $request->session()->forget([
+                'count',
+                'offset',
+                'limit'
+            ]);
+
+            $request->session()->put([
+                'resultados' => null
+            ]);
+    
+            return redirect("/sepultamento/pesquisar/resultados")->withInput(); 
+        }
+
+        
+        if ($request->has('offset')) {
+            $offset = $request->get('offset');
+        }else{
+            $offset = 0;
+        }
+
+        if ($request->has('limit')) {
+            $limit = $request->get('limit');
+        }else{
+            $limit = 20;
+        }
+
+        
+        $count=$resultados->count();
+
+        if($request->get('action') == 'next'){
+            $offset = $request->get('offset')+$request->get('limit')-1;
+        }elseif($request->get('action') == 'back'){
+            $offset = $request->get('offset')-$request->get('limit')-1;
+        }
+            
+            
+        $request->session()->put([
+            'offset' => $offset    
+        ]);
+    
+
+        if($offset >= $count ){
+            $request->session()->forget([
+                'count',
+                'offset',
+                'limit'
+            ]);
+
+            $request->session()->put([
+                'resultados' => null
+            ]);
+    
+            return redirect("/sepultamento/pesquisar/resultados")->withInput(); 
+        }
 
 
+
+        $resultados->offset($offset)->limit($limit);
+        //dd($resultados);
+        
+        $request->session()->put([
+            'offset' => $offset,
+            'limit' => $limit,
+            'count' => $count,
+            'resultados' => $resultados->get()
+        ]);
+
+        $of=$offset+1;
+        $lim=$limit;
+        return redirect("/sepultamento/pesquisar/resultados/{$of}/{$lim}")->withInput();
 
     }
+
+    public function resultadoPesquisa($offset=0, $limit=20, Request $request){
+        
+        if(!empty(session('resultados'))){
+           
+            return view('resultado-pesquisa', [
+                'sepultamentos' => session('resultados'),
+                'count' => session('count'),
+                'offset' => $offset,
+                'limit' => $limit
+                ]);
+        }else{
+
+            return view('resultado-pesquisa', [
+                'sepultamentos' => session('resultados'),
+                'count' => session('count'),
+                'offset' => null,
+                'limit' => null
+                ]);
+        }
+        
+    }
+
+
 }

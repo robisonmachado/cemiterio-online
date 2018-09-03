@@ -27,6 +27,14 @@ Route::get('/register', function () {
     echo "register";
 })->name('register');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/sepultamento', 'SepultamentoController');
-Route::post('/sepultamento/pesquisar', 'SepultamentoController@pesquisar');
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('/sepultamento', 'SepultamentoController');
+    Route::post('/sepultamento/pesquisar', 'SepultamentoController@pesquisar');
+    Route::get('/sepultamento/pesquisar/resultados/{offset?}/{limit?}', 'SepultamentoController@resultadoPesquisa');
+    
+});
+
+

@@ -181,7 +181,8 @@ class Sepultamento extends Model
 
         if(!empty($results) and ($results->count() > 0)){
             return $results->orderby('sepultamentos.data_falecimento')
-                            ->orderby('sepultamentos.falecido')->get();
+                            ->orderby('sepultamentos.falecido');
+                            
                            
         }else{
             return null;
