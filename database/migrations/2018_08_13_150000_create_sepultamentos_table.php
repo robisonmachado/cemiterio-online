@@ -28,7 +28,7 @@ class CreateSepultamentosTable extends Migration
 
             $table->unique(['numero_sepultamento', 'cova_id']);
             
-            $table->string('atestado_obito')->nullable();
+            $table->string('certidao_obito')->nullable();
 
             $table->timestamps();
         });

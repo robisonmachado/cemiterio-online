@@ -47,33 +47,29 @@
     @if($sepultamentos)
     <table class="table table-hover table-dark">
         <thead class="">
-            <tr class="text-center">
+            <tr class="text-center" click="">
                 <th scope="col">FALECIDO</th>
                 <th scope="col">DATA DE FALECIMENTO</th>
                 <th scope="col">QUADRA</th>
                 <th scope="col">FILA</th>
                 <th scope="col">COVA</th>
                 <th scope="col">Nº SEPULTAMENTO</th>
-                @if(Auth::user()->isDiretor())
-                    <th scope="col">EDITAR</th>
-                @endif
+                <th scope="col">CERTIDÃO</th>
+                
             </tr>                    
         </thead>
         <tbody>
         @foreach ($sepultamentos as $sepultamento)
-            <tr>
+            <tr class="cursor-pointer" data-toggle="modal" data-target="#modalOptions" data-sepultamentoId="{{ $sepultamento->id }}">
                 <td>{{ $sepultamento->falecido }}</td>
                 <td class="text-center">{{ $sepultamento->data_falecimento }}</td>
                 <td class="text-center">{{ $sepultamento->quadra_numero }}</td>
                 <td class="text-center">{{ $sepultamento->fila_numero }}</td>
                 <td class="text-center">{{ $sepultamento->cova_numero }}</td>
                 <td class="text-center">{{ $sepultamento->numero_sepultamento }}</td>
-                @if(Auth::user()->isDiretor())
-                    <td class="d-flex justify-content-around">
-                        <span class="fa fa-edit"></span>
-                        <span class="fa fa-trash-alt"></span>
-                    </td>
-                @endif
+                <td class="text-center"><i class="{{ $sepultamento->hasCertidaoObito() ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
+                
+                                
             </tr>                    
         @endforeach
 
@@ -151,6 +147,58 @@
     </div>
        
     @endif
+
+<!-- Modal -->
+<div class="modal fade" id="modalOptions" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i aria-hidden="true" class="fas fa-times-circle"></i>
+        </button>
+      </div>
+      <div class="modal-body d-flex justify-content-around">
+          
+            <a id="linkVisualizarSepultamento" class="text-dark" href="">
+                <i class="far fa-2x fa-eye cursor-pointer"></i>
+            </a>
+
+            <a id="linkEditarSepultamento" class="text-dark" href="">
+                <i class="far fa-2x fa-edit cursor-pointer"></i>
+            </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- Fim Modal -->
+
+<script>
+    $('#modalOptions').on('show.bs.modal', function (event) {
+    //console.log(event)
+    var linha = $(event.relatedTarget)
+    console.log(linha)
+    var sepultamentoId = linha.attr('data-sepultamentoId') // Extract info from data-* attributes
+    console.log(sepultamentoId)
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-title').text('OPÇÕES')
+
+    linkVisualizarSepultamento = modal.find('#linkVisualizarSepultamento')
+    linkVisualizarSepultamento.attr('href', '/sepultamentos/'+sepultamentoId)
+
+    linkEditarSepultamento = modal.find('#linkEditarSepultamento')
+    linkEditarSepultamento.attr('href', '/sepultamentos/'+sepultamentoId+'/form-editar')
+
+    console.log(linkEditarSepultamento.attr('action'))
+    //modal.find('.modal-body input').val(recipient)
+
+    })
+</script>
+
     
 </div>
 

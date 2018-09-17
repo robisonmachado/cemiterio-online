@@ -10,7 +10,7 @@ class Sepultamento extends Model
 {
     protected $fillable = [
             'falecido', 'data_falecimento', 'data_sepultamento', 
-            'numero_sepultamento', 'atestado_obito'
+            'numero_sepultamento', 'certidao_obito'
         ];
 
     public function cova(){
@@ -89,8 +89,8 @@ class Sepultamento extends Model
 
 
     public function addCertidaoObito(Request $request): ?self{
-        if($request->hasFile('atestado_obito')){
-            $arquivoObito = $request->file('atestado_obito');
+        if($request->hasFile('certidao_obito')){
+            $arquivoObito = $request->file('certidao_obito');
             $nomeArquivo = "CERTIDAO DE OBITO ID-".$this->id
                         ." Q".$this->quadra->numero
                         ."F".$this->fila->numero
@@ -101,7 +101,7 @@ class Sepultamento extends Model
             $pathArquivoSalvo = $arquivoObito->storeAs('obitos', $nomeArquivo);
             
             if($pathArquivoSalvo){
-                $this->atestado_obito = $pathArquivoSalvo;
+                $this->certidao_obito = $pathArquivoSalvo;
                 if($this->save()){
                     return $this;
                 }else{
@@ -189,6 +189,21 @@ class Sepultamento extends Model
         } 
         
 
+    }
+
+    public function formularioEditar(Sepultamento $sepultamento){
+        return 'formularioEditar';
+        dd($sepultamento);
+    }
+
+    public function hasCertidaoObito():bool {
+        //dd($this);
+        if(!empty($this->certidao_obito)){
+
+            return true;
+        }
+
+        return false;
     }
 
 

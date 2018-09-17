@@ -31,6 +31,10 @@ class User extends Authenticatable
         return $this->belongsTo(UserType::class);
     }
 
+    public function isDeveloper(){
+        return $this->userType->id == UserType::DEVELOPER;
+    }
+
     public function isSecretario(){
         return $this->userType->id == UserType::SECRETARIO;
     }
@@ -47,6 +51,19 @@ class User extends Authenticatable
         return $this->userType->id == UserType::ZELADOR;
     }
 
+    public function isFuncionario(){
+        return $this->userType->id == UserType::FUNCIONARIO;
+    }
+
+    public function isEstagiario(){
+        return $this->userType->id == UserType::ESTAGIARIO;
+    }
+
+    public function userTypeName(): ?string{
+        return UserType::nameById($this->userType->id);
+    }
+
+    
 
 
 }

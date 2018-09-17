@@ -78,9 +78,22 @@ class SepultamentoController extends Controller
      * @param  \App\Sepultamento  $sepultamento
      * @return \Illuminate\Http\Response
      */
-    public function show(Sepultamento $sepultamento)
+    public function show(int $sepultamentoId)
     {
-        //
+        $sepultamento = Sepultamento::find($sepultamentoId);
+
+        //dd($sepultamento);
+        if(!empty($sepultamento)){
+           
+            return view('cemiterio.visualizar-sepultamento', [
+                    'sepultamento' => $sepultamento
+                ]);
+        }else{
+
+            return view('cemiterio.visualizar-sepultamento', [
+                    'sepultamentos' => null
+                ]);
+        }
     }
 
     /**
@@ -147,7 +160,7 @@ class SepultamentoController extends Controller
                 'resultados' => null
             ]);
     
-            return redirect("/sepultamento/pesquisar/resultados")->withInput(); 
+            return redirect("/sepultamentos/pesquisar/resultados")->withInput(); 
         }
 
         
@@ -189,7 +202,7 @@ class SepultamentoController extends Controller
                 'resultados' => null
             ]);
     
-            return redirect("/sepultamento/pesquisar/resultados")->withInput(); 
+            return redirect("/sepultamentos/pesquisar/resultados")->withInput(); 
         }
 
 
@@ -206,7 +219,7 @@ class SepultamentoController extends Controller
 
         $of=$offset+1;
         $lim=$limit;
-        return redirect("/sepultamento/pesquisar/resultados/{$of}/{$lim}")->withInput();
+        return redirect("/sepultamentos/pesquisar/resultados/{$of}/{$lim}")->withInput();
 
     }
 
@@ -230,6 +243,12 @@ class SepultamentoController extends Controller
                 ]);
         }
         
+    }
+
+
+    public function formularioEditar(Sepultamento $sepultamento){
+        echo 'formularioEditar';
+        dd($sepultamento);
     }
 
 

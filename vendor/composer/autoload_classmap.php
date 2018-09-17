@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Cova' => $baseDir . '/app/Cova.php',
+    'App\\Exceptions\\DatabaseException' => $baseDir . '/app/Exceptions/DatabaseException.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Fila' => $baseDir . '/app/Fila.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -19,6 +20,7 @@ return array(
     'App\\Http\\Controllers\\FilaController' => $baseDir . '/app/Http/Controllers/FilaController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\JazigoController' => $baseDir . '/app/Http/Controllers/JazigoController.php',
+    'App\\Http\\Controllers\\LogController' => $baseDir . '/app/Http/Controllers/LogController.php',
     'App\\Http\\Controllers\\QuadraController' => $baseDir . '/app/Http/Controllers/QuadraController.php',
     'App\\Http\\Controllers\\SepultamentoController' => $baseDir . '/app/Http/Controllers/SepultamentoController.php',
     'App\\Http\\Controllers\\UserTypeController' => $baseDir . '/app/Http/Controllers/UserTypeController.php',
@@ -29,6 +31,7 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Jazigo' => $baseDir . '/app/Jazigo.php',
+    'App\\Log' => $baseDir . '/app/Log.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',
