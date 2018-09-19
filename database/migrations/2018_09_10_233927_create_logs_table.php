@@ -17,8 +17,8 @@ class CreateLogsTable extends Migration
             $table->increments('id');
             $table->string('username');
             $table->string('user_type_name');
-            $table->string('operacao');
-            $table->text('dados');
+            $table->string('eventType');
+            $table->text('eventData');
             $table->timestamps();
         });
     }

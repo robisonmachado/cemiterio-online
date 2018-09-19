@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class Sepultamento extends Model
 {
@@ -88,29 +89,72 @@ class Sepultamento extends Model
     }
 
 
+    public static function updateSepultamento(Request $request, Sepultamento $sepultamento): ?Sepultamento {
+        //dd($request);
+        $falecido = $request->input('falecido');
+        $data_falecimento = $request->input('data_falecimento');
+        $data_sepultamento = $request->input('data_sepultamento');
+        $quadra = $request->input('quadra');
+        $fila = $request->input('fila');
+        $cova = $request->input('cova');
+        $numero_sepultamento = $request->input('numero_sepultamento');
+
+        
+        if(empty($quadra)){
+            $quadra = $sepultamento->quadra->numero;
+        }
+        
+        
+        $quadraObj = Quadra::firstOrCreate(['numero' => $quadra]);
+        
+        //dd($quadraObj);
+            
+        
+        //dd($fila);
+        if(empty($fila)){
+            $fila = $sepultamento->fila->numero;
+        }
+        
+        $filaObj = $quadraObj->filas()->where('filas.numero', $fila)->first();
+                
+        dd($filaObj);
+           
+
+
+
+        $sepultamento->update($request->except('certidao_obito'));
+        $sepultamento->addCertidaoObito($request);
+
+        return $sepultamento;
+    }
+
+
     public function addCertidaoObito(Request $request): ?self{
         if($request->hasFile('certidao_obito')){
-            $arquivoObito = $request->file('certidao_obito');
-            $nomeArquivo = "CERTIDAO DE OBITO ID-".$this->id
-                        ." Q".$this->quadra->numero
-                        ."F".$this->fila->numero
-                        ."C".$this->cova->numero
-                        ."S".$this->numero_sepultamento
-                        .".".$arquivoObito->clientExtension();
-            
-            $pathArquivoSalvo = $arquivoObito->storeAs('obitos', $nomeArquivo);
-            
-            if($pathArquivoSalvo){
-                $this->certidao_obito = $pathArquivoSalvo;
-                if($this->save()){
-                    return $this;
-                }else{
-                    return null;
+            if ($request->file('certidao_obito')->isValid()) {
+                
+                $arquivoObito = $request->file('certidao_obito');
+                $nomeArquivo = "CERTIDAO_DE_OBITO_ID-".$this->id
+                            ."_Q".$this->quadra->numero
+                            ."F".$this->fila->numero
+                            ."C".$this->cova->numero
+                            ."S".$this->numero_sepultamento
+                            .".".$arquivoObito->clientExtension();
+                
+                $pathArquivoSalvo = $arquivoObito->storeAs('public/obitos', $nomeArquivo);
+                
+                if($pathArquivoSalvo){
+                    $this->certidao_obito = $pathArquivoSalvo;
+                    if($this->save()){
+                        return $this;
+                    }else{
+                        return null;
+                    }
                 }
-            }
 
+                return null;
+            }
             return null;
-            
         }
         return null;
     }
@@ -191,20 +235,53 @@ class Sepultamento extends Model
 
     }
 
-    public function formularioEditar(Sepultamento $sepultamento){
-        return 'formularioEditar';
-        dd($sepultamento);
-    }
 
     public function hasCertidaoObito():bool {
         //dd($this);
         if(!empty($this->certidao_obito)){
-
-            return true;
+            if(Storage::exists($this->certidao_obito)){
+                return true;
+            }
+            return false;
         }
 
         return false;
     }
+
+
+    public static function deletarCertidaoObito(int $sepultamentoId): bool{
+        $sepultamento = Sepultamento::find($sepultamentoId);
+
+        if(!empty($sepultamento)){
+            if($sepultamento->hasCertidaoObito()){
+                if(Storage::exists($sepultamento->certidao_obito)){
+                    echo 'existe arquivo: deletando certidão de óbito';
+                    $fileIsDeleted = Storage::delete($sepultamento->certidao_obito);
+                    $sepultamento->certidao_obito = null;
+                    $sepultamento->save();
+                    if($fileIsDeleted == true){
+                        return true;
+                    }else{
+                        return false;
+                    }
+    
+                }else{
+                    return false;
+                }
+                    
+                //return Storage::download($sepultamento->certidao_obito);
+                    
+            }else{
+                return false;
+            }
+                
+        }else{
+            return false;
+        }
+        return false;
+    }
+    
+    
 
 
 

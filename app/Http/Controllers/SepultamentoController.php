@@ -9,8 +9,11 @@ use App\Quadra;
 use App\Fila;
 use App\Cova;
 use App\Sepultamento;
+use App\Log;
 
 use App\Exceptions\DatabaseException;
+use App\Exceptions\DeleteCertidaoObitoException;
+use Illuminate\Support\Facades\Storage;
 
 class SepultamentoController extends Controller
 {
@@ -102,9 +105,22 @@ class SepultamentoController extends Controller
      * @param  \App\Sepultamento  $sepultamento
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sepultamento $sepultamento)
+    public function edit(int $sepultamentoId)
     {
-        //
+        $sepultamento = Sepultamento::find($sepultamentoId);
+
+        //dd($sepultamento);
+        if(!empty($sepultamento)){
+           
+            return view('cemiterio.editar-sepultamento', [
+                    'sepultamento' => $sepultamento
+                ]);
+        }else{
+
+            return view('cemiterio.editar-sepultamento', [
+                    'sepultamentos' => null
+                ]);
+        }
     }
 
     /**
@@ -116,7 +132,13 @@ class SepultamentoController extends Controller
      */
     public function update(Request $request, Sepultamento $sepultamento)
     {
-        //
+        Sepultamento::updateSepultamento($request, $sepultamento);
+
+
+        //dd($sepultamentoOld);
+
+        //$o = Log::eventDBUpdate();
+        //dd($o);
     }
 
     /**
@@ -245,11 +267,51 @@ class SepultamentoController extends Controller
         
     }
 
-
-    public function formularioEditar(Sepultamento $sepultamento){
-        echo 'formularioEditar';
-        dd($sepultamento);
+    public function verCertidaoObito(int $sepultamentoId){
+        $sepultamento = Sepultamento::find($sepultamentoId);
+        if(!empty($sepultamento)){
+            if($sepultamento->hasCertidaoObito()){
+                $url_certidao_obito = Storage::url($sepultamento->certidao_obito);
+                return view('cemiterio.ver-certidao-obito', [
+                    'sepultamento' => $sepultamento,
+                    'url_certidao_obito' => $url_certidao_obito
+                    ]);
+            }
+            
+        }
     }
+
+    public function downloadCertidaoObito(int $sepultamentoId){
+        $sepultamento = Sepultamento::find($sepultamentoId);
+        if(!empty($sepultamento)){
+            if($sepultamento->hasCertidaoObito()){
+                return Storage::download($sepultamento->certidao_obito);
+                
+            }
+            
+        }
+    }
+
+    public function deletarCertidaoObito(int $sepultamentoId){
+        $sepultamento = Sepultamento::find($sepultamentoId);
+
+        try{
+            if(Sepultamento::deletarCertidaoObito($sepultamentoId)){
+                return redirect("/sepultamentos/$sepultamentoId/edit")->with('status', 'CERTIDÃO DE ÓBITO DELETADA COM SUCESSO!');    
+            }else{
+                throw new DeleteCertidaoObitoException('ERRO AO DELETAR CERTIDÃO DE ÓBITO!');    
+            }
+            
+        }catch(\Exception $exception){
+            throw new DeleteCertidaoObitoException('ERRO AO DELETAR CERTIDÃO DE ÓBITO!');
+        }
+       
+    }
+
+    
+
+    
+
 
 
 }

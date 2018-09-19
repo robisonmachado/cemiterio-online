@@ -50,6 +50,12 @@ class Handler extends ExceptionHandler
             return $exception->render($request);
         }
 
+        if($exception instanceof DeleteCertidaoObitoException){
+            return $exception->render($request);
+        }
+
+        
+
         return parent::render($request, $exception);
     }
 }

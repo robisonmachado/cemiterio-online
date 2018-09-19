@@ -40,7 +40,7 @@
 
 <div class="container">
     <nav class="navbar navbar-light bg-light">
-        <a class="btn btn-dark" href="/"> VOLTAR </a>   
+        <i class="btn btn-dark fas fa-chevron-left" onclick="window.history.go(-1); return false;"></i> 
         <div class="col-10 alert alert-dark text-center"> <strong>RESULTADOS DA PESQUISA</strong> </div>
     </nav>
     
@@ -67,7 +67,7 @@
                 <td class="text-center">{{ $sepultamento->fila_numero }}</td>
                 <td class="text-center">{{ $sepultamento->cova_numero }}</td>
                 <td class="text-center">{{ $sepultamento->numero_sepultamento }}</td>
-                <td class="text-center"><i class="{{ $sepultamento->hasCertidaoObito() ? 'fas fa-check' : 'fas fa-times' }}"></i></td>
+                <td class="text-center"><i class="{{ $sepultamento->hasCertidaoObito() ? 'fas fa-check text-success' : 'fas fa-times text-danger' }}"></i></td>
                 
                                 
             </tr>                    
@@ -191,7 +191,7 @@
     linkVisualizarSepultamento.attr('href', '/sepultamentos/'+sepultamentoId)
 
     linkEditarSepultamento = modal.find('#linkEditarSepultamento')
-    linkEditarSepultamento.attr('href', '/sepultamentos/'+sepultamentoId+'/form-editar')
+    linkEditarSepultamento.attr('href', '/sepultamentos/'+sepultamentoId+'/edit')
 
     console.log(linkEditarSepultamento.attr('action'))
     //modal.find('.modal-body input').val(recipient)

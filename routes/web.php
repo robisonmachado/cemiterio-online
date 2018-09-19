@@ -33,8 +33,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('/sepultamentos', 'SepultamentoController');
     Route::post('/sepultamentos/pesquisar', 'SepultamentoController@pesquisar');
-    Route::get('/sepultamentos/{sepultamento}/form-editar', 'SepultamentoController@formularioEditar');
+    Route::get('/sepultamentos/{sepultamento}/ver_certidao_obito', 'SepultamentoController@verCertidaoObito');
+    Route::get('/sepultamentos/{sepultamento}/download_certidao_obito', 'SepultamentoController@downloadCertidaoObito');
+    Route::get('/sepultamentos/{sepultamento}/deletar_certidao_obito', 'SepultamentoController@deletarCertidaoObito');
+    
     Route::get('/sepultamentos/pesquisar/resultados/{offset?}/{limit?}', 'SepultamentoController@resultadoPesquisa');
+    
     
 });
 
