@@ -15,7 +15,7 @@ class CreateCovasTable extends Migration
     {
         Schema::create('covas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('numero');
+            $table->unsignedInteger('numero');     
             
             $table->unsignedInteger('fila_id');
             $table->foreign('fila_id')
@@ -23,7 +23,7 @@ class CreateCovasTable extends Migration
                     ->onDelete('cascade');
             
             $table->unique(['numero', 'fila_id']);
-
+            
             $table->timestamps();
         });
     }

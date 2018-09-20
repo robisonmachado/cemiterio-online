@@ -42,5 +42,6 @@ class CreateSepultamentosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('sepultamentos');
+
     }
 }

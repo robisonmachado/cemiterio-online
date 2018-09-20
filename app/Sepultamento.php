@@ -27,64 +27,26 @@ class Sepultamento extends Model
     }
 
     public static function addSepultamento(Request $request): ?Sepultamento {
-        //dd($request->all());
-        $quadra = Quadra::where('numero', $request->get('quadra'))->first();
-                
-        if(empty($quadra)){
-            $sepultamentoObj = Quadra::create(['numero' => $request->get('quadra')])
-                            ->filas()->create(['numero' => $request->get('fila')])
-                            ->covas()->create(['numero' => $request->get('cova')])
-                            ->sepultamentos()->create($request->only([
-                                                            'falecido', 
-                                                            'data_falecimento',
-                                                            'data_sepultamento',
-                                                            'numero_sepultamento',
-                                                        ]));
-            
-            $sepultamentoObj->addCertidaoObito($request);
-            return $sepultamentoObj;
-        }
-
-        $fila = $quadra->filas()->where('numero', $request->get('fila'))->first();
         
-        if(empty($fila)){
-            $sepultamentoObj = $quadra->filas()->create(['numero' => $request->get('fila')])
-                                ->covas()->create(['numero' => $request->get('cova')])
-                                ->sepultamentos()->create($request->only([
+        $quadra = Quadra::firstOrCreate(['numero' => $request->get('quadra')]);
+        
+        $fila = $quadra->filas()->firstOrCreate(['numero' => $request->get('fila')]);
+        
+        $cova = $fila->covas()->firstOrCreate(['numero' => $request->get('cova')]);
+        
+        //dd($cova);
+        
+        $sepultamento = $cova->sepultamentos()->firstOrCreate($request->only([
                                                                 'falecido', 
                                                                 'data_falecimento',
                                                                 'data_sepultamento',
                                                                 'numero_sepultamento',
                                                             ]));
-            $sepultamentoObj->addCertidaoObito($request);
-            return $sepultamentoObj;
-    
-        }
-
-        $cova = $fila->covas()->where('numero', $request->get('cova'))->first();
-
-        if(empty($cova)){
-            $sepultamentoObj = $fila->covas()->create(['numero' => $request->get('cova')])
-                                ->sepultamentos()->create($request->only([
-                                                                'falecido', 
-                                                                'data_falecimento',
-                                                                'data_sepultamento',
-                                                                'numero_sepultamento',
-                                                            ]));
-
-                $sepultamentoObj->addCertidaoObito($request);
-                return $sepultamentoObj;
-        }else{
-            $sepultamentoObj = $cova->sepultamentos()->create($request->only([
-                                                                'falecido', 
-                                                                'data_falecimento',
-                                                                'data_sepultamento',
-                                                                'numero_sepultamento',
-                                                            ]));
-                            
-            $sepultamentoObj->addCertidaoObito($request);
-            return $sepultamentoObj;
-        }
+        
+        //dd($sepultamento);
+        $sepultamento->addCertidaoObito($request);
+        return $sepultamento;
+       
 
     }
 
@@ -112,17 +74,25 @@ class Sepultamento extends Model
         
         //dd($fila);
         if(empty($fila)){
+            //dd($fila);
             $fila = $sepultamento->fila->numero;
         }
         
-        $filaObj = $quadraObj->filas()->where('filas.numero', $fila)->first();
+        $filaObj = $quadraObj->filas()->where('filas.numero', $fila)->firstOrCreate(['numero' => $fila]);
                 
-        dd($filaObj);
+        //dd($filaObj);
            
+        if(empty($cova)){
+            $cova = $sepultamento->cova->numero;
+        }
 
+        $covaObj = $filaObj->covas()->where('covas.numero', $cova)->firstOrCreate(['numero' => $cova]);
 
+        //dd($covaObj);
 
         $sepultamento->update($request->except('certidao_obito'));
+        $sepultamento->cova()->associate($covaObj);
+        $sepultamento->save();
         $sepultamento->addCertidaoObito($request);
 
         return $sepultamento;

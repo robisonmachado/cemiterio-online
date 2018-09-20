@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cova extends Model
 {
-    protected $fillable = ['numero', 'fila_id'];
+    protected $fillable = ['numero', 'fila'];
     
     public function fila(){
         return $this->belongsTo(Fila::class);

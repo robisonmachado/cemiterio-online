@@ -14,7 +14,7 @@ class CreateJazigosTable extends Migration
     public function up()
     {
         Schema::create('jazigos', function (Blueprint $table) {
-            $table->increments('id');
+            //$table->increments('id');
 
             $table->unsignedInteger('cova_id');
             $table->foreign('cova_id')

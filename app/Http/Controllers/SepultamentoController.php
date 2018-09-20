@@ -132,10 +132,15 @@ class SepultamentoController extends Controller
      */
     public function update(Request $request, Sepultamento $sepultamento)
     {
-        Sepultamento::updateSepultamento($request, $sepultamento);
+        try{
+            $result = Sepultamento::updateSepultamento($request, $sepultamento);
+        }catch(\Exception $e){
+            throw new DatabaseException('ERRO AO EDITAR SEPULTAMENTO');
+        }
+        
+        //dd($result);
 
-
-        //dd($sepultamentoOld);
+        return redirect("sepultamentos/{$sepultamento->id}/edit")->with(['status' => 'REGISTRO ATUALIZADO COM SUCESSO!']);
 
         //$o = Log::eventDBUpdate();
         //dd($o);

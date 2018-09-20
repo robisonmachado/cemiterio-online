@@ -68,8 +68,7 @@
                 <td class="text-center">{{ $sepultamento->cova_numero }}</td>
                 <td class="text-center">{{ $sepultamento->numero_sepultamento }}</td>
                 <td class="text-center"><i class="{{ $sepultamento->hasCertidaoObito() ? 'fas fa-check text-success' : 'fas fa-times text-danger' }}"></i></td>
-                
-                                
+                                                
             </tr>                    
         @endforeach
 
