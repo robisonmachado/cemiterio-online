@@ -100,10 +100,12 @@ class Sepultamento extends Model
 
 
     public function addCertidaoObito(Request $request): ?self{
+        //dd($request);
         if($request->hasFile('certidao_obito')){
             if ($request->file('certidao_obito')->isValid()) {
                 
                 $arquivoObito = $request->file('certidao_obito');
+                //dd($arquivoObito);
                 $nomeArquivo = "CERTIDAO_DE_OBITO_ID-".$this->id
                             ."_Q".$this->quadra->numero
                             ."F".$this->fila->numero

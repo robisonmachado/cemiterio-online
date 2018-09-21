@@ -14,7 +14,7 @@ class UserType extends Model
     const FUNCIONARIO = 2;
     const ESTAGIARIO = 1;
 
-
+    
     public static function nameById(int $userTypeId): ?string{
         if($userTypeId == self::DEVELOPER){
             return 'DEVELOPER';

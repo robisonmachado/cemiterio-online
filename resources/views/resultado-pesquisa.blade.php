@@ -40,7 +40,7 @@
 
 <div class="container">
     <nav class="navbar navbar-light bg-light">
-        <i class="btn btn-dark fas fa-chevron-left" onclick="window.history.go(-1); return false;"></i> 
+        <i class="btn btn-dark fas fa-chevron-left" onclick="window.location.href = '/'; return false;"></i> 
         <div class="col-10 alert alert-dark text-center"> <strong>RESULTADOS DA PESQUISA</strong> </div>
     </nav>
     

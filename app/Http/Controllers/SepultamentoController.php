@@ -139,7 +139,7 @@ class SepultamentoController extends Controller
         }
         
         //dd($result);
-
+        
         return redirect("sepultamentos/{$sepultamento->id}/edit")->with(['status' => 'REGISTRO ATUALIZADO COM SUCESSO!']);
 
         //$o = Log::eventDBUpdate();

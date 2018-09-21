@@ -31,7 +31,8 @@
         .container{
             width:21cm;
             height: 29.7cm;
-            background-color: green;
+            background-color: white;
+            border: solid thin black;
         }
 
         img{
@@ -45,6 +46,12 @@
 
         .col-center{
             margin:0 auto;
+        }
+
+        @media print {
+            .container{
+                border: none;
+            }
         }
 
     </style>

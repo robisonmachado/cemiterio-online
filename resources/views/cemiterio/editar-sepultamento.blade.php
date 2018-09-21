@@ -41,7 +41,11 @@
             @csrf
             
             <nav class="navbar navbar-light bg-light">
-            <i class="btn btn-dark fas fa-chevron-left" onclick="window.history.go(-1); return false;"></i> 
+            @if (session('status'))
+                <i class="btn btn-dark fas fa-chevron-left" onclick="window.location.href = '/'; return false;"></i> 
+            @else
+                <i class="btn btn-dark fas fa-chevron-left" onclick="window.history.go(-1); return false;"></i> 
+            @endif
                 <div class="col-10 alert alert-info text-center"> <strong>EDITAR SEPULTAMENTO</strong> </div>
             </nav>
             
@@ -105,21 +109,26 @@
                         <i class="text-center fas fa-trash cursor-pointer m-1 m-md-2"></i>
                     </a>
                     
+                    <button type="submit" class="btn btn-primary mt-4 mb-2">EDITAR SEPULTAMENTO</button>
                                  
                     @else
-                    <input class="font-weight-bold col-9" id="certidao_obito" name="certidao_obito" value="CERTIDÃO DE ÓBITO NÃO CADASTRADA" readonly>
+                    <input class="font-weight-bold col-9" value="CERTIDÃO DE ÓBITO NÃO CADASTRADA" readonly>
                     <i class="fas fa-times col-1 text-danger"></i>
 
                     <div class="form-row mt-2 mb-2">
-                        <div class="form-group col-md-3">
-                            <label for="certidao_obito">ADICIONAR CERTIDÃO DE ÓBITO</label>
-                            <input type="file" class="" id="certidao_obito" name="certidao_obito">
+                        <div class="form-group col-sm-12">
+                            <label for="certidao_obito">ADICIONAR CERTIDÃO DE ÓBITO (15Mb max.)</label>
+                            <input type="file" class="col-sm-12" id="certidao_obito" name="certidao_obito">
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">EDITAR SEPULTAMENTO</button>
-                    
+                    <button type="submit" class="btn btn-primary mb-2">EDITAR SEPULTAMENTO</button>
+
                     @endif
+
+                    
+                    
+                    
                 </div>
             </div>
 

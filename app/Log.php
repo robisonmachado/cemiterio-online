@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class Log extends Model
 {
+    protected $fillable = [
+        'user_name', 'user_type_name', 'eventType', 'eventData'
+    ];
+
+
     const EVENT_DB_INSERT = 'INSERT';
     const EVENT_DB_SELECT = 'SELECT';
     const EVENT_DB_UPDATE = 'UPDATE';
@@ -16,11 +21,17 @@ class Log extends Model
     const EVENT_FILE_DELETE = 'FILE_DELETE';
     const EVENT_FILE_DOWNLOAD = 'FILE_DOWNLOAD';
 
-    public static function addLog(string $eventType, string $eventData){
+    public static function addLog(string $eventType, EventData $eventData){
         if (Auth::check()){
             $user = Auth::user();
             if(self::isValidEventType($eventType)){
                 echo 'valid op';
+                $log = new Log;
+                $log->user_name = $user->name;
+                $log->user_type_name = UserType::nameById($user->user_type_id);
+                $log->eventType = $eventType;
+                $log->eventData = $eventData;
+                $log->save();
             }
         }
         
@@ -46,9 +57,12 @@ class EventData{
     public $data;
 }
 
-class DatabaseEventData{
+class DatabaseEventData extends EventData{
     public $tableName;
-    public $data;
+}
+
+class FileEventData extends EventData{
+    
 }
 
 
