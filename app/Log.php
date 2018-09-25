@@ -30,15 +30,35 @@ class Log extends Model
                 $log->user_name = $user->name;
                 $log->user_type_name = UserType::nameById($user->user_type_id);
                 $log->eventType = $eventType;
-                $log->eventData = $eventData;
+                $log->eventData = \json_encode($eventData);
                 $log->save();
             }
         }
         
     }
 
+    public static function eventDBSelect(DatabaseEventData $databaseEventData){
+        return self::addLog(Log::EVENT_DB_SELECT, $databaseEventData);
+    }
+
+    public static function eventDBInsert(DatabaseEventData $databaseEventData){
+        return self::addLog(Log::EVENT_DB_INSERT, $databaseEventData);
+    }
+
     public static function eventDBUpdate(DatabaseEventData $databaseEventData){
         return self::addLog(Log::EVENT_DB_UPDATE, $databaseEventData);
+    }
+
+    public static function eventFileSave(FileEventData $fileEventData){
+        return self::addLog(Log::EVENT_FILE_SAVE, $fileEventData);
+    }
+
+    public static function eventFileDelete(FileEventData $fileEventData){
+        return self::addLog(Log::EVENT_FILE_DELETE, $fileEventData);
+    }
+
+    public static function eventFileDownload(FileEventData $fileEventData){
+        return self::addLog(Log::EVENT_FILE_DOWNLOAD, $fileEventData);
     }
 
     public static function isValidEventType(string $eventType): bool{
@@ -59,14 +79,15 @@ class EventData{
 
 class DatabaseEventData extends EventData{
     public $tableName;
+    public function __construct(string $tableName, $data){
+        $this->tableName = $tableName;
+        $this->data = $data;
+    }
 }
 
 class FileEventData extends EventData{
-    
+    public function __construct($data){
+        $this->data = $data;
+    }
 }
-
-
-
-
-
 

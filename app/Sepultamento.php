@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Log;
 
 class Sepultamento extends Model
 {
@@ -45,6 +46,7 @@ class Sepultamento extends Model
         
         //dd($sepultamento);
         $sepultamento->addCertidaoObito($request);
+        Log::eventDBInsert(new DatabaseEventData('sepultamentos', $request->all()));
         return $sepultamento;
        
 
@@ -95,6 +97,8 @@ class Sepultamento extends Model
         $sepultamento->save();
         $sepultamento->addCertidaoObito($request);
 
+        Log::eventDBUpdate(new DatabaseEventData('sepultamentos', $request->all()));
+
         return $sepultamento;
     }
 
@@ -118,6 +122,7 @@ class Sepultamento extends Model
                 if($pathArquivoSalvo){
                     $this->certidao_obito = $pathArquivoSalvo;
                     if($this->save()){
+                        Log::eventFileSave(new FileEventData($pathArquivoSalvo));
                         return $this;
                     }else{
                         return null;
@@ -196,6 +201,7 @@ class Sepultamento extends Model
         //dd($results->get());
 
         if(!empty($results) and ($results->count() > 0)){
+            Log::eventDBSelect(new DatabaseEventData('sepultamentos', $results->toSql()));
             return $results->orderby('sepultamentos.data_falecimento')
                             ->orderby('sepultamentos.falecido');
                             
@@ -220,6 +226,7 @@ class Sepultamento extends Model
         return false;
     }
 
+    
 
     public static function deletarCertidaoObito(int $sepultamentoId): bool{
         $sepultamento = Sepultamento::find($sepultamentoId);
@@ -227,11 +234,14 @@ class Sepultamento extends Model
         if(!empty($sepultamento)){
             if($sepultamento->hasCertidaoObito()){
                 if(Storage::exists($sepultamento->certidao_obito)){
-                    echo 'existe arquivo: deletando certidão de óbito';
+                    //echo 'existe arquivo: deletando certidão de óbito';
                     $fileIsDeleted = Storage::delete($sepultamento->certidao_obito);
+                    $deletedFile = $sepultamento->certidao_obito;
+
                     $sepultamento->certidao_obito = null;
                     $sepultamento->save();
                     if($fileIsDeleted == true){
+                        Log::eventFileDelete(new FileEventData($deletedFile));
                         return true;
                     }else{
                         return false;
@@ -258,3 +268,5 @@ class Sepultamento extends Model
 
 
 }
+
+

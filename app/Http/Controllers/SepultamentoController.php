@@ -10,6 +10,7 @@ use App\Fila;
 use App\Cova;
 use App\Sepultamento;
 use App\Log;
+use App\FileEventData;
 
 use App\Exceptions\DatabaseException;
 use App\Exceptions\DeleteCertidaoObitoException;
@@ -287,14 +288,19 @@ class SepultamentoController extends Controller
     }
 
     public function downloadCertidaoObito(int $sepultamentoId){
+        
         $sepultamento = Sepultamento::find($sepultamentoId);
         if(!empty($sepultamento)){
             if($sepultamento->hasCertidaoObito()){
+                $downloadedFile = $sepultamento->certidao_obito;
+                Log::eventFileDownload(new FileEventData($downloadedFile));
                 return Storage::download($sepultamento->certidao_obito);
                 
             }
             
         }
+
+
     }
 
     public function deletarCertidaoObito(int $sepultamentoId){
